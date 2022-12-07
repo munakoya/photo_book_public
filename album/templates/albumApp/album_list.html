@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!-- 
+    テンプレート
+    → html上にDjangoテンプレート言語を埋め込むことでDBからの取得データなどを表示できる
+    templatesディレクトリを作成
+    変数を取得 → 
+    複雑な処理 → 
+    p61にテンプレート言語の文法あり
+ -->
+
+<!-- 
+    base.htmlを継承
+    load staticでstaticタグを有効に staticはsettingsに設定されてる
+  -->
+{% extends 'albumApp/base.html' %}
+{% load static %}
+
+<!-- 
+    titleはページごとに設定する
+    → ページごとに即したタイトルの設定はSEOに効果的
+ -->
+{% block title %}PHOTO BOOK{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hooper@0.2.1/dist/hooper.css">
+<script src="https://cdn.jsdelivr.net/npm/hooper@0.2.1/dist/hooper.min.js"></script>
+{% endblock %}
+
+{% block active_album_list %}active{% endblock %}
+<!-- headerの編集 -->
+{% block header %}
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">ALBUM</h1>
+            <p class="lead fw-normal text-white-50 mb-0">アルバム一覧</p>
+            <div class="d-flex justify-content-end mb-4 mt-2">
+                <!-- urlでアルバム新規作成ページにつなげる -->
+                <p><a class="btn btn-dark float-right border-light" href="{% url 'album:album_create' %}">新規アルバム作成</a></p>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+<!-- contentsの編集 -->
+{% block contents %}
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for album in album_list %}
+            <!-- 1カード -->
+            <div class="col mb-5">
+                <div class="card h-100">
+                    <!-- Product image-->
+                    <!-- わんちalbum.photo1で反応する？ -->
+                    {% if album.photo1 %}
+                    <img class="card-img-top" src="{{ album.photo1.url }}" alt="..." />
+                    {% endif %}
+                    <!-- Product details-->
+                    <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product name-->
+                            <h5 class="fw-bolder">{{ album.title }}</h5>
+                            <!-- 日付に変更-->
+                            {{ album.created_at }}
+                        </div>
+                    </div>
+                    <!-- Product actions-->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <!-- album_detailにつなげる -->
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url 'album:album_detail' album.pk %}">編集</a></div>
+                    </div>
+                </div>
+            </div>
+            <!-- ここまでが多分繰り返し表示になる -->
+            {% empty %}
+            <p>アルバムがありません</p>
+            {% endfor %}   
+        </div>
+        <div class="justify-content-center">
+            <!-- ペジネーション処理 -->
+            {% if is_paginated %}
+            <ul class="pagination">
+                <!-- 前ページへのリンク -->
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a href="?page={{ page_obj.previous_page_number }}" class="page-link">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+
+                <!-- ページ数表示 -->
+                {% for page_num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == page_num %}
+                    <li class="page-item active">
+                        <a href="#" class="page-link">{{ page_num }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                        <a href="?page={{ page_num }}" class="page-link">{{ page_num }}</a>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+
+                <!-- 次のページへのリンク -->
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a href="?page={{ page_obj.next_page_number }}" class="page-link">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

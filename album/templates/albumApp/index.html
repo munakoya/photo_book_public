@@ -1,0 +1,126 @@
+{% extends 'albumApp/base.html' %}
+
+{% load static %}
+
+{% block title %}PHOTO BOOK{% endblock %}
+
+{% block header %}
+<header class="masthead d-flex align-items-center">
+    <div class="container px-4 px-lg-5 text-center">
+        <h1 class="mb-1">PHOTO BOOK</h1>
+        <h3 class="mb-5"><em>Django × AWS × PostgreSQL</em></h3>
+        {% if user.is_authenticated %}
+        {% else %}
+            <a class="btn btn-primary btn-xl" href="{% url 'account_login' %}">Log In</a>
+        {% endif %}
+    </div>
+</header>
+{% endblock %}
+
+{% block contents %}
+<!-- About-->
+<section class="content-section bg-light" id="about">
+    <div class="container px-4 px-lg-5 text-center">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-10">
+                <h2>PHOTO BOOK</h2>
+                <p class="lead mb-5">
+                    画像・動画・音楽・gifを保存してみよう
+                    <a href="https://unsplash.com/">Unsplash</a>
+                    !
+                </p>
+                <a class="btn btn-dark btn-xl" href="#services">What We Offer</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Services-->
+<section class="content-section bg-primary text-white text-center" id="services">
+    <div class="container px-4 px-lg-5">
+        <div class="content-section-heading">
+            <h3 class="text-secondary mb-0">Services</h3>
+            <h2 class="mb-5">What We Offer</h2>
+        </div>
+        <div class="row gx-4 gx-lg-5">
+            <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+                <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-screen-smartphone"></i></span>
+                <h4><strong>Album</strong></h4>
+                <p class="text-faded mb-0">Koya Munakata</p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-5 mb-lg-0">
+                <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-pencil"></i></span>
+                <h4><strong>Video</strong></h4>
+                <p class="text-faded mb-0">Coming Soon</p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-5 mb-md-0">
+                <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-like"></i></span>
+                <h4><strong>Music</strong></h4>
+                <p class="text-faded mb-0">
+                    Coming Soon
+                    <i class="fas fa-heart"></i>
+                </p>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <span class="service-icon rounded-circle mx-auto mb-3"><i class="icon-mustache"></i></span>
+                <h4><strong>gif</strong></h4>
+                <p class="text-faded mb-0">Coming Soon</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Portfolio-->
+<section class="content-section" id="portfolio">
+    <div class="container px-4 px-lg-5">
+        <div class="content-section-heading text-center">
+            <h3 class="text-secondary mb-0">Portfolio</h3>
+            <h2 class="mb-5">Recent Projects</h2>
+        </div>
+        <div class="row gx-0">
+            <div class="col-lg-6">
+                <a class="portfolio-item" href="{% url 'album:album_list' %}">
+                    <div class="caption">
+                        <div class="caption-content">
+                            <div class="h2">Album</div>
+                            <p class="mb-0">画像保存サービス</p>
+                        </div>
+                    </div>
+                    <img class="img-fluid" src="{% static 'assets/img/sakura.jpg' %}" alt="..." />
+                </a>
+            </div>
+            <div class="col-lg-6">
+                <a class="portfolio-item" href="#!">
+                    <div class="caption">
+                        <div class="caption-content">
+                            <div class="h2">Video</div>
+                            <p class="mb-0">動画保存サービス</p>
+                        </div>
+                    </div>
+                    <img class="img-fluid" src="{% static 'assets/img/beach.jpg' %}" alt="..." />
+                </a>
+            </div>
+            <div class="col-lg-6">
+                <a class="portfolio-item" href="#!">
+                    <div class="caption">
+                        <div class="caption-content">
+                            <div class="h2">Music</div>
+                            <p class="mb-0">音楽保存サービス</p>
+                        </div>
+                    </div>
+                    <img class="img-fluid" src="{% static 'assets/img/road.jpg' %}" alt="..." />
+                </a>
+            </div>
+            <div class="col-lg-6">
+                <a class="portfolio-item" href="#!">
+                    <div class="caption">
+                        <div class="caption-content">
+                            <div class="h2">gif</div>
+                            <p class="mb-0">gif保存サービス</p>
+                        </div>
+                    </div>
+                    <img class="img-fluid" src="{% static 'assets/img/winter.jpg' %}" alt="..." />
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

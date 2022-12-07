@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+{% extends 'albumApp/base.html' %}
+{% load static %}
+
+{% block title %}新規アルバム作成 | PHOTO BOOK{% endblock %}
+
+{% block album_list %}active{% endblock %}
+
+{% block contents %}
+<div class="container my-div-style" style="padding-top: 5rem;">
+    <div class="row">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="table">
+                {{ form.as_table }}
+            </table>
+            <button class="btn btn-primary" type="submit">作成</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

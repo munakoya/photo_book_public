@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- base.htmlの継承 -->
+{% extends 'account/base.html' %}
+<!-- bootstrapタグを有効になり、簡単にスタイルが適用される -->
+{% load bootstrap5 %}
+
+<!-- titleの編集 -->
+{% block title %}サインアップ | PHOTO BOOK{% endblock %}
+
+{% block active_inquiry %}active{% endblock %}
+
+<!-- contentsの編集 -->
+{% block contents %}
+<div class="container" style="padding-top: 5rem;">
+    <div class="row">
+        <div class="my-div-style">
+            <h1>サインアップ</h1>
+            <!-- styleでcontentsのページを下げるため、padding-topを設定 -->
+            <form method="post" style="padding-top: 5rem;" action="{% url 'account_signup' %}">
+                <!-- クロスサイトリクエストフォージェリっていうサイバー攻撃対策 → かかないとDjangoは403エラー出す -->
+                {% csrf_token %}
+                
+                <div class="mb-4 col-4">
+                    <!-- bootstrap適用 -->
+                    {% bootstrap_form form %}
+                </div>
+
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}">
+                {% endif %}
+                <button class="btn btn-primary" type="submit">送信</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+    
+</html>
